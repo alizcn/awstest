@@ -3,10 +3,9 @@ version: '3.9'
 services:
   web:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: .  # Dockerfile'ın bulunduğu dizin
     ports:
-      - "8000:8000"
+      - "8000:8000"  # Django uygulaması için port 8000'i dışarıya aç
     volumes:
-      - .:/app
-    command: python manage.py runserver 0.0.0.0:8000
+      - .:/app  # Geçerli dizini konteynerin /app dizinine bağla
+    command: python manage.py runserver 0.0.0.0:8000  # Django sunucusunu başlat
