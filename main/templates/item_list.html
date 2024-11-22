@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Item List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Items</h1>
-    <ul>
-        {% for item in items %}
-        <li>
-            <strong>{{ item.name }}</strong>: {{ item.description }} - ${{ item.price }}
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="container mt-5">
+        <h1 class="mb-4">Item List</h1>
+        <a href="{% url 'add_item' %}" class="btn btn-success mb-3">Add New Item</a>
+        <ul class="list-group">
+            {% for item in items %}
+                <li class="list-group-item">
+                    <strong>{{ item.name }}</strong> - {{ item.price }} <br>
+                    {{ item.description }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
