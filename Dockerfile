@@ -1,18 +1,17 @@
-# Temel Docker image
+# Python image'ını temel al
 FROM python:3.11-slim
 
-# Gerekli dosyaları kopyala
+# Çalışma dizinini oluştur ve ayarla
 WORKDIR /app
-COPY . /app/
 
-# Bağımlılıkları yükle
+# Gerekli paketlerin yüklenmesi için bağımlılık dosyasını kopyala
+COPY requirements.txt .
+
+# Gerekli Python paketlerini yükle
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Çevre değişkenlerini ayarla
-ENV PYTHONUNBUFFERED 1
+# Tüm proje dosyalarını kopyala
+COPY . .
 
-# Django için gerekli portu aç
-EXPOSE 8000
-
-# Uygulamanın çalıştırılacağı komut
-CMD ["gunicorn", "aws_test.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Django uygulamasını başlat
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
