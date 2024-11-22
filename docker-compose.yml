@@ -2,11 +2,26 @@ version: '3.9'
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
+    build: .
+    command: gunicorn aws_test.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
-    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    environment:
+      - MYSQL_HOST=databaseaws.cbuickik02aj.us-east-1.rds.amazonaws.com
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=aws_test
+      - MYSQL_USER=django_user
+      - MYSQL_PASSWORD=Ali.12345
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: aws_test
+      MYSQL_USER: django_user
+      MYSQL_PASSWORD: Ali.12345
+    ports:
+      - "3306:3306"
